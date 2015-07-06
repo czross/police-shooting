@@ -16,7 +16,7 @@
     <header>
         <h1>Police Shootings in USA</h1>
         <h3>This map shows all the police shooting from <a href="http://regressing.deadspin.com/deadspin-police-shooting-database-update-were-still-go-1627414202">Deadspin</a>
-         last fall</h3>
+         last fall.</h3>
     </header>
     <p>All the shootings are shown as circles with <text id="red">red</text> circles for suspects with guns
     and those who were unarmed are shown in <text id="green">green</text> with the rest in <text id="blue">blue.</text> Click on any
@@ -31,8 +31,13 @@
       var newYork = L.marker([40.7127, -74,0059]).bindPopup('New York City pop:8.5 mil.');
       var philadelphia = L.marker([40.0094, -75.1333]).bindPopup('Philadelphia pop:1.5 mil.');
       var lostAngeles = L.marker([34.0194, -118.4108]).bindPopup('Los Angeles pop:3.9 mil.');
+      var phoenix = L.marker([33.5722, -112.0880]).bindPopup('Phoenix pop:1.5 mil.');
+      var sanAntonio = L.marker([29.4724, -98.5251]).bindPopup('San Antonio pop:1.4 mil.');
+      var sanDiego = L.marker([32.7757, -96.7967]).bindPopup('San Diego pop:1.4 mil.');
+      var dallas = L.marker([32.7757, -96.7967]).bindPopup('Dallas pop:1.3 mil.');
+      var sanJose = L.marker([37.2969, -121.8193]).bindPopup('San Jose pop:1 mil.');
       var cities = L.layerGroup([houston, chigago, newYork,
-          philadelphia, lostAngeles]);
+          philadelphia, lostAngeles, phoenix, sanAntonio, sanDiego, dallas, sanJose]);
 
 
       var data;
@@ -58,10 +63,10 @@
                       dotColor = 'blue';
                   }
 
-                  var circle = new L.circleMarker([d.lat, d.lng],  {color: dotColor, opacity:.5})
+                  var circle = new L.circleMarker([d.lat, d.lng],  {color: dotColor, opacity:.5}).addTo(map);
                   var text = d.Summary;
                   circle.bindPopup(text);
-                  allAges.push(circle);
+
               })
           },
           dataType:"json"
@@ -79,9 +84,12 @@
 
 
     </script>
+    <p>With the city markers we are able to see that the majority of police involved shootings
+        occur in the denser population areas and rarely in rural areas</p>
     <footer>
         <p><a href="http://www.hdwallpapersn.com/wp-content/uploads/2015/04/background_image_9.jpg">background </a>
-            <a href="http://regressing.deadspin.com/deadspin-police-shooting-database-update-were-still-go-1627414202">data</a>
+            <a href="http://regressing.deadspin.com/deadspin-police-shooting-database-update-were-still-go-1627414202">Police data</a>
+            <a></a>
         </p>
     </footer>
   </body>
