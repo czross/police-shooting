@@ -14,9 +14,29 @@
   <body>
     <div id="container" style="width:500px; height:500px;"></div>
     <script>
-      
-    	// This is where you should execute your drawMap function // 
-
+      var map = L.map('container').setView([47.6097, -122.3331], 11);
+      var layer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
+      layer.addTo(map);
+      var universityWashington = L.marker([47.6550, -122.3080]).bindPopup('University of Washington');
+      var seattleUniversity = L.marker([47.6100, -122.3200]).bindPopup('Seattle University');
+      var seattlePacificUniversity = L.marker([47.6502, -122.3617]).bindPopup('Seattle Pacific University');
+      var northSeattle = L.marker([47.6992, -122.3333]).bindPopup('North Seattle College');
+      var centralSeattle = L.marker([47.6167, -122.3217]).bindPopup('Central Seattle College');
+      var southSeattle = L.marker([47.5475, -122.3519]).bindPopup('South Seattle College');
+      var colleges = L.layerGroup([universityWashington, seattleUniversity, seattlePacificUniversity,
+          northSeattle, centralSeattle, southSeattle]);
+      var data;
+      $.ajax({
+          
+      })
+      var baseMaps = {
+          "Streets" : layer
+      };
+      var overlayMaps = {
+          "Colleges" : colleges
+      };
+      L.control.layers(baseMaps, overlayMaps).addTo(map);
+    	// This is where you should execute your drawMap function //
     </script>
   </body>
 </html>
