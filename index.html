@@ -19,7 +19,8 @@
          last fall</h3>
     </header>
     <p>All the shootings are shown as circles with <text id="red">red</text> circles for suspects with guns
-    and those who were unarmed are shown in <text id="green">green</text> with the rest in <text id="blue">blue.</text> </p>
+    and those who were unarmed are shown in <text id="green">green</text> with the rest in <text id="blue">blue.</text> Click on any
+    of the markers to find the summary of the incident, there are alos markers showing the five most populated cities as reference</p>
     <div id="container" style="width:500px; height:500px;"></div>
     <script>
       var map = L.map('container').setView([39.50, -98.35], 2);
@@ -55,7 +56,7 @@
                       dotColor = 'blue';
                   }
 
-                  var circle = new L.circle([d.lat, d.lng], 200, {color: dotColor, opacity:.5}).addTo(map)
+                  var circle = new L.circleMarker([d.lat, d.lng],  {color: dotColor, opacity:.5}).addTo(map)
                   var text = d.Summary;
                   circle.bindPopup(text);
               })

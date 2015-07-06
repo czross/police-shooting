@@ -11,6 +11,12 @@ header {
     background-color: lightgray;
 }
 
+p {
+    background-color: aliceblue;
+    margin-left: 28%;
+    width: 500px;
+}
+
 #container {
     border: solid black;
     margin-left: 28%;
