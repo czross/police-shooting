@@ -1,6 +1,6 @@
 <!doctype html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/html">
   <head>
     <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="js/map.js"></script>
@@ -11,47 +11,65 @@
     <link rel="stylesheet" href="css/main.css"/>
   </head>
 
+
   <body>
+    <header>
+        <h1>Police Shootings in USA</h1>
+        <h3>This map shows all the police shooting from <a href="http://regressing.deadspin.com/deadspin-police-shooting-database-update-were-still-go-1627414202">Deadspin</a>
+         last fall</h3>
+    </header>
+    <p>All the shootings are shown as circles with <text id="red">red</text> circles for suspects with guns
+    and those who were unarmed are shown in <text id="green">green</text> with the rest in <text id="blue">blue.</text> </p>
     <div id="container" style="width:500px; height:500px;"></div>
     <script>
-      var map = L.map('container').setView([47.6097, -122.3331], 11);
+      var map = L.map('container').setView([39.50, -98.35], 2);
       var layer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
       layer.addTo(map);
-      var universityWashington = L.marker([47.6550, -122.3080]).bindPopup('University of Washington');
-      var seattleUniversity = L.marker([47.6100, -122.3200]).bindPopup('Seattle University');
-      var seattlePacificUniversity = L.marker([47.6502, -122.3617]).bindPopup('Seattle Pacific University');
-      var northSeattle = L.marker([47.6992, -122.3333]).bindPopup('North Seattle College');
-      var centralSeattle = L.marker([47.6167, -122.3217]).bindPopup('Central Seattle College');
-      var southSeattle = L.marker([47.5475, -122.3519]).bindPopup('South Seattle College');
-      var colleges = L.layerGroup([universityWashington, seattleUniversity, seattlePacificUniversity,
-          northSeattle, centralSeattle, southSeattle]);
+      var houston = L.marker([29.7805, -95.3863]).bindPopup('Houston pop:2.2 mil.');
+      var chigago = L.marker([41.8369, -87.6847]).bindPopup('Chicago pop:2.7 mil.');
+      var newYork = L.marker([40.7127, -74,0059]).bindPopup('New York City pop:8.5 mil.');
+      var philadelphia = L.marker([40.0094, -75.1333]).bindPopup('Philadelphia pop:1.5 mil.');
+      var lostAngeles = L.marker([34.0194, -118.4108]).bindPopup('Los Angeles pop:3.9 mil.');
+      var cities = L.layerGroup([houston, chigago, newYork,
+          philadelphia, lostAngeles]);
+
 
       var data;
-      var under18 = [];
-      var between19And40 = [];
-      var over40 = [];
-      var allAges = [];
-      var data;
+
+      //https://data.seattle.gov/resource/7ais-f98f.json?year=2015&$limit=500
       $.ajax({
           url:'data/response.json',
           type: "get",
           success:function(dat) {
               data = dat
-              // Loop through your data array
+
               data.map(function(d){
-                  var circle = new L.circle([d.latitude, d.longitude], 200, {color:'red', opacity:.5}).addTo(map)
+                  var dotColor;
+                  if (d.Weapon.indexOf('gun') >= 0) {
+                      dotColor = 'red';
+                  } else if (d.Weapon.indexOf('rifle') >= 0) {
+                      dotColor = 'red';
+                  } else if (d.Weapon.indexOf('unarmed') >= 0) {
+                      dotColor = 'green';
+                  } else {
+                      dotColor = 'blue';
+                  }
 
-                  // Get the text that you want here
-                  //var text =  d.offense_type
-
-
-                  // Bind the text to your circle
-                  //circle.bindPopup(text)
-
+                  var circle = new L.circle([d.lat, d.lng], 200, {color: dotColor, opacity:.5}).addTo(map)
+                  var text = d.Summary;
+                  circle.bindPopup(text);
               })
           },
           dataType:"json"
       })
+      var baseMaps = {
+          "Streets" : layer
+      };
+      var overlayMaps = {
+          "Cities" : cities
+      };
+      L.control.layers(baseMaps, overlayMaps).addTo(map);
+
 
     </script>
   </body>
