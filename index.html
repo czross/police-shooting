@@ -25,16 +25,44 @@
       var southSeattle = L.marker([47.5475, -122.3519]).bindPopup('South Seattle College');
       var colleges = L.layerGroup([universityWashington, seattleUniversity, seattlePacificUniversity,
           northSeattle, centralSeattle, southSeattle]);
+
       var data;
+      var under18 = [];
+      var between19And40 = [];
+      var over40 = [];
+      var allAges = [];
       $.ajax({
-          
+          url:'data/response.json',
+          type: "get",
+          success:function(dat) {
+              data = dat
+              // Loop through your data array
+              data.map(function(d){
+                  if (d.Weapon.indexOf('gun') >= 0) {
+                      dotColor = 'red';
+                  } else if (d.Weapon.indexOf('rifle') >= 0) {
+                      dotColor = 'red';
+                  } else if (d.Weapon.indexOf('unarmed') >= 0) {
+                      dotColor = 'green';
+                  } else {
+                      dotColor = 'blue';
+                  }
+                  allAges.push(new L.marker([d.lat, d.lng], {color: dotColor, opacity:.5})).bindPopup(d[ "Victim's Age" ]);
+              })
+          },
+          dataType:"json"
       })
+
+      var allAgesLayer = L.layerGroup(allAges);
+
       var baseMaps = {
-          "Streets" : layer
+          "Cities" : colleges
       };
+
       var overlayMaps = {
-          "Colleges" : colleges
+          "All Ages" : allAgesLayer
       };
+
       L.control.layers(baseMaps, overlayMaps).addTo(map);
     	// This is where you should execute your drawMap function //
     </script>
