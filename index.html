@@ -20,7 +20,7 @@
     </header>
     <p>All the shootings are shown as circles with <text id="red">red</text> circles for suspects with guns
     and those who were unarmed are shown in <text id="green">green</text> with the rest in <text id="blue">blue.</text> Click on any
-    of the markers to find the summary of the incident, there are alos markers showing the five most populated cities as reference</p>
+    of the markers to find the summary of the incident. To give a quick overview of location are also markers showing the five most populated cities as reference</p>
     <div id="container" style="width:500px; height:500px;"></div>
     <script>
       var map = L.map('container').setView([39.50, -98.35], 2);
@@ -36,6 +36,8 @@
 
 
       var data;
+
+      var allAges = [];
 
       //https://data.seattle.gov/resource/7ais-f98f.json?year=2015&$limit=500
       $.ajax({
@@ -56,22 +58,31 @@
                       dotColor = 'blue';
                   }
 
-                  var circle = new L.circleMarker([d.lat, d.lng],  {color: dotColor, opacity:.5}).addTo(map)
+                  var circle = new L.circleMarker([d.lat, d.lng],  {color: dotColor, opacity:.5})
                   var text = d.Summary;
                   circle.bindPopup(text);
+                  allAges.push(circle);
               })
           },
           dataType:"json"
       })
+
+      var allAgesLayer = L.layerGroup(allAges);
+
       var baseMaps = {
           "Streets" : layer
       };
       var overlayMaps = {
-          "Cities" : cities
+          "Cities" : cities,
       };
       L.control.layers(baseMaps, overlayMaps).addTo(map);
 
 
     </script>
+    <footer>
+        <p><a href="http://www.hdwallpapersn.com/wp-content/uploads/2015/04/background_image_9.jpg">background </a>
+            <a href="http://regressing.deadspin.com/deadspin-police-shooting-database-update-were-still-go-1627414202">data</a>
+        </p>
+    </footer>
   </body>
 </html>

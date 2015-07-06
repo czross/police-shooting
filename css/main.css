@@ -1,20 +1,31 @@
 /* You'll probably want to add some styles here */
 body {
-    background-color: lightblue;
-    background-image: url("../img/background.jpg");
+    background-color: orange;
+    background-image: url("../img/background_image_9.jpg");
 }
 
 header {
     text-align: center;
     font-family: 'Raleway', 'Helvetica Neue', 'Helvetica', "sans-serif";
     font-style: italic;
-    background-color: lightgray;
+    background-color: transparent;
 }
 
 p {
-    background-color: aliceblue;
+    background-color: transparent;
     margin-left: 28%;
     width: 500px;
+}
+
+a {
+    style: none;
+}
+
+footer {
+    height: 60px;
+    background-image: none;
+    text-align: right;
+
 }
 
 #container {
